@@ -65,3 +65,14 @@ class TestIntelligentOffice(unittest.TestCase):
         system.manage_light_level()
         mock_lightbulb.assert_called_with(system.LED_PIN, False)
         self.assertFalse(system.light_on)
+
+    @patch.object(VEML7700, "lux", new_callable=PropertyMock)
+    @patch.object(GPIO, "output")
+    @patch.object(GPIO, "input")
+    def test_manage_light_level_turn_on_light_if_any_quadrant_is_occupied_and_lower_than_500_lux(self, mock_infrared_sensor: Mock, mock_lightbulb: Mock, mock_ambient_light_sensor: Mock):
+        mock_ambient_light_sensor.return_value = 499
+        mock_infrared_sensor.side_effect = [False, True, False, False]
+        system = IntelligentOffice()
+        system.manage_light_level()
+        mock_lightbulb.assert_called_with(system.LED_PIN, True)
+        self.assertTrue(system.light_on)

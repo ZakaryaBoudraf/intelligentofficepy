@@ -84,6 +84,14 @@ class TestIntelligentOffice(unittest.TestCase):
         system = IntelligentOffice()
         system.monitor_air_quality()
         mock_buzzer.assert_called_with(system.BUZZER_PIN, True)
-        self.assertTrue(system.buzzer_on)
+        self.assertTrue(system.buzzer_on)    @patch.object(GPIO, "output")
+
+    @patch.object(GPIO, "input")
+    def test_monitor_air_quality_buzzer_turns_off_if_smoke_is_not_detected(self, mock_smoke_sensor: Mock, mock_buzzer: Mock):
+        mock_smoke_sensor.return_value = True
+        system = IntelligentOffice()
+        system.monitor_air_quality()
+        mock_buzzer.assert_called_with(system.BUZZER_PIN, False)
+        self.assertFalse(system.buzzer_on)
 
 

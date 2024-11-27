@@ -37,7 +37,7 @@ class TestIntelligentOffice(unittest.TestCase):
         system.manage_blinds_based_on_time()
         self.assertFalse(system.blinds_open)
 
-    @patch.object(VEML7700, "lux")
+    @patch.object(VEML7700, "lux", new_callable=PropertyMock)
     @patch.object(GPIO, "output")
     def test_manage_light_level_turn_on_light_if_lower_than_500_lux(self, mock_lightbulb: Mock, mock_ambient_light_sensor: Mock):
         mock_ambient_light_sensor.return_value = 499
@@ -46,7 +46,7 @@ class TestIntelligentOffice(unittest.TestCase):
         mock_lightbulb.assert_called_with(system.LED_PIN, True)
         self.assertTrue(system.light_on)
 
-    @patch.object(VEML7700, "lux")
+    @patch.object(VEML7700, "lux", new_callable=PropertyMock)
     @patch.object(GPIO, "output")
     def test_manage_light_level_turn_off_light_if_higher_than_550_lux(self, mock_lightbulb: Mock, mock_ambient_light_sensor: Mock):
         mock_ambient_light_sensor.return_value = 551

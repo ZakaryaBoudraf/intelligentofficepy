@@ -80,7 +80,7 @@ class TestIntelligentOffice(unittest.TestCase):
     @patch.object(GPIO, "output")
     @patch.object(GPIO, "input")
     def test_monitor_air_quality_buzzer_turns_on_if_smoke_is_detected(self, mock_smoke_sensor: Mock, mock_buzzer: Mock):
-        mock_smoke_sensor.return_value = False # smoke detected = False
+        mock_smoke_sensor.return_value = False
         system = IntelligentOffice()
         system.monitor_air_quality()
         mock_buzzer.assert_called_with(system.BUZZER_PIN, True)

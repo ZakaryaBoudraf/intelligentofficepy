@@ -54,6 +54,8 @@ class IntelligentOffice:
         self.buzzer_on = False
 
     def check_quadrant_occupancy(self, pin: int) -> bool:
+        if pin not in [self.INFRARED_PIN1, self.INFRARED_PIN2, self.INFRARED_PIN3, self.INFRARED_PIN4]:
+            raise IntelligentOfficeError("Invalid pin number")
         return GPIO.input(pin)
 
     def manage_blinds_based_on_time(self) -> None:
@@ -63,7 +65,6 @@ class IntelligentOffice:
     def manage_light_level(self) -> None:
         # To be implemented
         pass
-
 
     def monitor_air_quality(self) -> None:
         # To be implemented

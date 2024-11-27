@@ -35,5 +35,4 @@ class TestIntelligentOffice(unittest.TestCase):
         mock_current_time.return_value = datetime(2024,11,6,20,0)
         system = IntelligentOffice()
         system.manage_blinds_based_on_time()
-        mock_servo.assert_called_with(12)
-        self.assertTrue(system.blinds_open)
+        self.assertFalse(system.blinds_open)

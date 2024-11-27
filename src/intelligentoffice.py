@@ -63,6 +63,9 @@ class IntelligentOffice:
         if current_time.hour == 8 and not self.blinds_open:
             self.change_servo_angle(12)
             self.blinds_open = True
+        elif current_time.hour == 20 and self.blinds_open:
+            self.change_servo_angle(0)
+            self.blinds_open = False
 
     def manage_light_level(self) -> None:
         # To be implemented
